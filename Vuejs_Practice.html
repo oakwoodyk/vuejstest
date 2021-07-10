@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <h1>To Do List</h1>
+
+  <div id="app">
+    <my-component></my-component>
+    <p>
+      タスク名：<input type="text" v-model="addText">
+      推定時間(分)：<input type="minutes" v-model="addMinites">
+      <button v-on:click="addToDo()">追加</button>
+    </p>
+    <ul>
+      <li v-for="todo in lists" :key="todo.id">{{ todo.text }}</li>
+    </ul>
+  </div>
+
+
+  <script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+          addText: '',
+          addMinutes: '',
+          lists: [],
+        },
+        methods: {
+          addToDo() {
+            this.lists.push({
+              text: this.addText,
+              minutes: this.addMinutes,
+            });
+            this.addText = '';
+            this.addMinutes = '';
+        }
+      }
+    });
+
+  </script>
+</body>
+
+</html>
