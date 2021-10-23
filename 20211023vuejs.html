@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+  <h1>To Do アプリ</h1>
+  <div id="app">
+    <div id="keyin">
+      タスク名：<input type="text" v-model="task" />
+      推定時間(分)：<input type="number" v-model="min" />
+      <button v-on:click="addTodoList">追加</button>
+      <p class="semi-title">タスク 推定時間（分）</p>
+      <p>{{ task }}{{ min }}</p>
+    </div>
+      <div class="todo">
+      <list-item v-bind:list="list" />
+    </div>
+  </div>
+  <script>
+    Vue.component('listItem',{
+      template:`
+        <ul>
+          <li v-for="item in list">
+            {{item.text}} {{item.number}}
+          </li>
+        </ul>
+      `,
+      props:['list'],
+    });
+    new Vue ({
+      el:'#app',
+      data:({
+        list:[
+          { text: "予習" , number:"30分"},
+          { text: "学習" , number: "40分"},
+          { text: "復習" , number: "50分"},
+        ],
+      }),
+      methods:{
+        addTodoList(){
+          const todoText = this.task;
+          const todoNumber = this.min;
+          const newTodo = {text:todoText,number:todoNumber+"分"};
+          this.list.push(newTodo);
+          this.task = '';
+          this.min = '';
+        },
+      }
+    })
+  </script>
+  <style>
+    .semi-title{
+      font-weight: bold;
+      padding-left: 20px;
+    }
+  </style>
+</body>
+</html>
